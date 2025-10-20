@@ -1,0 +1,66 @@
+name: "EMHASS EV Charging Optimizer"
+description: "Electric Vehicle Charging Optimization for Home Assistant - Enhanced EMHASS with EV capabilities"
+url: https://github.com/tomvanacker85/emhass-ev-addon
+version: v1.0.0-ev
+slug: emhass-ev-optimizer
+arch:
+  - aarch64
+  - amd64
+image: "ghcr.io/tomvanacker85/emhass-ev-optimizer"
+ports:
+  5003/tcp: 5003
+ports_description:
+  5003/tcp: EMHASS EV Web interface and API
+webui: http://\[HOST\]:\[PORT:5003\]
+map:
+  - share:rw
+init: false
+hassio_role: default
+environment:
+  EMHASS_PORT: "5003"
+  EMHASS_LOG_LEVEL: "INFO"
+  EMHASS_DATA_PATH: "/share/emhass-ev"
+options:
+  # EV-specific configuration (completely separate from original EMHASS)
+  config_path: "/share/emhass-ev"
+  data_path: "/share/emhass-ev"
+  costfun: "profit"
+  log_level: "INFO"
+  optimization_time_step: 60
+  historic_days_to_retrieve: 2
+  method_ts_round: "first"
+  
+  # EV-specific parameters with defaults
+  number_of_ev_loads: 1
+  ev_battery_capacity: 
+    - 75000
+  ev_charging_efficiency:
+    - 0.9
+  ev_nominal_charging_power:
+    - 11000
+  ev_minimum_charging_power:
+    - 1400
+  ev_consumption_efficiency:
+    - 0.2
+
+schema:
+  config_path: str
+  data_path: str
+  costfun: list(cost|profit)
+  log_level: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
+  optimization_time_step: int(30,120)
+  historic_days_to_retrieve: int(1,14)
+  method_ts_round: list(first|nearest|index)
+  
+  # EV configuration schema
+  number_of_ev_loads: int(1,10)
+  ev_battery_capacity: 
+    - int(10000,200000)
+  ev_charging_efficiency:
+    - float(0.1,1.0)
+  ev_nominal_charging_power:
+    - int(1000,50000)
+  ev_minimum_charging_power:
+    - int(100,20000)
+  ev_consumption_efficiency:
+    - float(0.05,1.0)
