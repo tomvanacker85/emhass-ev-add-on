@@ -1,17 +1,20 @@
-name: "EMHASS EV Charging Optimizer"
-description: "Electric Vehicle Charging Optimization for Home Assistant - Enhanced EMHASS with EV capabilities"
-url: https://github.com/tomvanacker85/emhass-ev-addon
-version: v1.0.0-ev
-slug: emhass-ev-optimizer
+name: "EMHASS EV Extension"
+description: "Energy Management for Home Assistant with EV Charging Optimization"
+url: https://github.com/tomvanacker85/emhass
+version: v1.0.6
+slug: emhass-ev
 arch:
   - aarch64
   - amd64
-image: "ghcr.io/tomvanacker85/emhass-ev-optimizer"
+  - armhf
+  - armv7
+# Temporary: Use original EMHASS image until EV-specific image is built
+image: "ghcr.io/davidusb-geek/emhass"
 ports:
-  5003/tcp: 5003
+  5003/tcp: 5003 # Different port to avoid conflicts (5000=original, 5001=enhanced, 5003=EV)
 ports_description:
-  5003/tcp: EMHASS EV Web interface and API
-webui: http://\[HOST\]:\[PORT:5003\]
+  5003/tcp: Web interface and API (EV Extension)
+webui: http://[HOST]:[PORT:5003]
 map:
   - share:rw
 init: false
@@ -19,48 +22,62 @@ hassio_role: default
 environment:
   EMHASS_PORT: "5003"
   EMHASS_LOG_LEVEL: "INFO"
-  EMHASS_DATA_PATH: "/share/emhass-ev"
 options:
-  # EV-specific configuration (completely separate from original EMHASS)
+  # EV Extension options (isolated from original EMHASS)
   config_path: "/share/emhass-ev"
   data_path: "/share/emhass-ev"
-  costfun: "profit"
+  costfun: "cost"
   log_level: "INFO"
   optimization_time_step: 60
   historic_days_to_retrieve: 2
   method_ts_round: "first"
-  
-  # EV-specific parameters with defaults
-  number_of_ev_loads: 1
-  ev_battery_capacity: 
-    - 75000
-  ev_charging_efficiency:
-    - 0.9
-  ev_nominal_charging_power:
-    - 11000
-  ev_minimum_charging_power:
-    - 1400
-  ev_consumption_efficiency:
-    - 0.2
+  set_use_battery: true
+  battery_discharge_efficiency: 0.95
+  battery_charge_efficiency: 0.95
+  battery_nominal_energy_capacity: 5000
+  battery_minimum_state_of_charge: 0.3
+  battery_maximum_state_of_charge: 0.9
+  battery_target_state_of_charge: 0.6
+
+  # Deferrable loads (keep existing functionality)
+  number_of_deferrable_loads: 0
+  nominal_power_of_deferrable_loads: "[]"
+  operating_hours_of_each_deferrable_load: "[]"
+
+  # NEW: EV Extension Parameters
+  number_of_ev_loads: 0
+  ev_battery_capacity: "[]"
+  ev_charging_efficiency: "[]"
+  ev_nominal_charging_power: "[]"
+  ev_minimum_charging_power: "[]"
+  ev_consumption_efficiency: "[]"
 
 schema:
-  config_path: str
-  data_path: str
-  costfun: list(cost|profit)
-  log_level: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
-  optimization_time_step: int(30,120)
-  historic_days_to_retrieve: int(1,14)
-  method_ts_round: list(first|nearest|index)
-  
-  # EV configuration schema
-  number_of_ev_loads: int(1,10)
-  ev_battery_capacity: 
-    - int(10000,200000)
-  ev_charging_efficiency:
-    - float(0.1,1.0)
-  ev_nominal_charging_power:
-    - int(1000,50000)
-  ev_minimum_charging_power:
-    - int(100,20000)
-  ev_consumption_efficiency:
-    - float(0.05,1.0)
+  # Standard EMHASS schema
+  config_path: str?
+  data_path: str?
+  costfun: list(cost|profit|self-consumption)?
+  log_level: list(DEBUG|INFO|WARNING|ERROR)?
+  optimization_time_step: int(30,120)?
+  historic_days_to_retrieve: int(1,7)?
+  method_ts_round: list(first|nearest|linear)?
+  set_use_battery: bool?
+  battery_discharge_efficiency: float(0.1,1.0)?
+  battery_charge_efficiency: float(0.1,1.0)?
+  battery_nominal_energy_capacity: int(1000,100000)?
+  battery_minimum_state_of_charge: float(0.0,0.5)?
+  battery_maximum_state_of_charge: float(0.5,1.0)?
+  battery_target_state_of_charge: float(0.0,1.0)?
+
+  # Deferrable loads schema
+  number_of_deferrable_loads: int(0,10)?
+  nominal_power_of_deferrable_loads: str?
+  operating_hours_of_each_deferrable_load: str?
+
+  # EV Extension Schema
+  number_of_ev_loads: int(0,5)?
+  ev_battery_capacity: str?
+  ev_charging_efficiency: str?
+  ev_nominal_charging_power: str?
+  ev_minimum_charging_power: str?
+  ev_consumption_efficiency: str?

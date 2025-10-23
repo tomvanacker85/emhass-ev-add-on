@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.4 - 2025-10-23
+### Enhancement
+- Added km-based EV consumption forecast functionality
+- Added ev_consumption_efficiency parameter for intuitive distance-based energy calculation
+- Improved EV optimization with distance-based planning
+- Fixed port configuration to use 5003 (avoiding conflicts with enhanced add-on on 5001)
+- Updated to consistent versioning scheme
+
 ## 0.13.5 - 2025-09-19
 ### Improvement
 - Use SVG render mode for Plotly figures (@Crosenhain)

@@ -2,7 +2,7 @@
 
 ## 🎯 Repository Purpose
 
-This repository provides a **separate, enhanced EMHASS add-on** specifically for **Electric Vehicle charging optimization**. 
+This repository provides a **separate, enhanced EMHASS add-on** specifically for **Electric Vehicle charging optimization**.
 
 ### 🔄 Relationship with Original EMHASS
 
@@ -13,12 +13,14 @@ This repository provides a **separate, enhanced EMHASS add-on** specifically for
 ## 🏠 Installation in Home Assistant
 
 ### Step 1: Add EV Repository
+
 ```
 Home Assistant → Settings → Add-ons → Add-on Store → ⋮ (menu) → Repositories
 Add URL: https://github.com/tomvanacker85/emhass-ev-addon
 ```
 
 ### Step 2: Install EV Add-on
+
 - Find "EMHASS EV Charging Optimizer" in the store
 - Click Install
 - Configure EV parameters
@@ -28,10 +30,10 @@ Add URL: https://github.com/tomvanacker85/emhass-ev-addon
 
 You can run **both** add-ons simultaneously:
 
-| **Add-on** | **Repository** | **Port** | **Data Path** |
-|------------|---------------|----------|---------------|
-| **Original EMHASS** | `davidusb-geek/emhass-add-on` | 5002 | `/share/emhass` |
-| **EV Optimizer** | `tomvanacker85/emhass-ev-addon` | 5003 | `/share/emhass-ev` |
+| **Add-on**          | **Repository**                  | **Port** | **Data Path**      |
+| ------------------- | ------------------------------- | -------- | ------------------ |
+| **Original EMHASS** | `davidusb-geek/emhass-add-on`   | 5002     | `/share/emhass`    |
+| **EV Optimizer**    | `tomvanacker85/emhass-ev-addon` | 5003     | `/share/emhass-ev` |
 
 ## 🎉 Result
 
