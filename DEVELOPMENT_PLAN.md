@@ -242,9 +242,22 @@ docker-compose down
 - [x] Implement validation on frontend (automatic via param_definitions)
 - [x] Add enable/disable toggle for EV optimization (number_of_ev_loads = 0 disables)
 - [x] Match existing UI layout and styling (automatic via configuration_script.js)
+- [x] Add `number_of_ev_loads` to header_input_list for section toggle
 
 **Files modified:**
 - `emhass-ev/src/emhass/static/data/param_definitions.json` ✅
+- `emhass-ev/src/emhass/static/configuration_script.js` ✅ (Added to header_input_list)
+
+**Configuration Page Architecture:**
+1. **Backend**: `web_server.py` → `/configuration` route
+2. **Template**: `templates/configuration.html` → Loads JavaScript
+3. **Controller**: `static/configuration_script.js` → Builds UI dynamically
+4. **Data Source**: `static/data/param_definitions.json` → Section/parameter definitions
+5. **Template**: `static/configuration_list.html` → HTML structure for inputs
+6. **Defaults**: `data/config_defaults.json` → Default values
+
+**Key Implementation Detail:**
+The `header_input_list` in `configuration_script.js` controls which parameters act as section toggles. Parameters in this list (like `set_use_battery`, `number_of_deferrable_loads`, `number_of_ev_loads`) enable/disable entire configuration sections dynamically.
 
 **New "Electric Vehicle" section added with:**
 - `number_of_ev_loads` - Number of EVs to optimize (0 = disabled, default: 0)
