@@ -30,7 +30,7 @@ RUN \
   && cp -r /tmp/emhass/src/emhass/static/* /app/src/emhass/static/ \
   && rm -rf /tmp/emhass/.git
 
-# Copy run script
+# Copy run script (cache buster: v2)
 COPY run.sh /
 RUN chmod a+x /run.sh
 
