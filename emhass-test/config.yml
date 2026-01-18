@@ -1,6 +1,6 @@
-name: EMHASS-test
-description: Energy Management for Home Assistant (testing version)
-url: https://github.com/davidusb-geek/emhass
+name: EMHASS-EV-test
+description: Energy Management for Home Assistant with EV support (testing version)
+url: https://github.com/tomvanacker85/emhass-ev
 version: test # pull the latest test image
 slug: emhass-test
 arch:
@@ -8,7 +8,7 @@ arch:
   - amd64
   # - armhf
   # - armv7
-image: "ghcr.io/davidusb-geek/emhass" #set if use image container repository
+image: "ghcr.io/tomvanacker85/emhass-ev" #set if use image container repository
 ports:
   5000/tcp: 5000
 ports_description:

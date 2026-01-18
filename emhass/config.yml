@@ -1,29 +1,29 @@
-name: EMHASS
-description: Energy Management for Home Assistant
-url: https://github.com/davidusb-geek/emhass
+name: EMHASS-EV
+description: Energy Management for Home Assistant with EV support
+url: https://github.com/tomvanacker85/emhass-ev
 version: v0.15.5 #set if use image container version
-slug: emhass
+slug: emhass-ev
 arch:
   - aarch64
   - amd64
   # - armhf
   # - armv7
-image: "ghcr.io/davidusb-geek/emhass" #set if use image container repository
+image: "ghcr.io/tomvanacker85/emhass-ev" #set if use image container repository
 ports:
-  5000/tcp: 5000
+  5001/tcp: 5001
 ports_description:
-  5000/tcp: Web interface and API
-webui: http://[HOST]:[PORT:5000]
+  5001/tcp: Web interface and API
+webui: http://[HOST]:[PORT:5001]
 map:
   - share:rw
 init: false
 hassio_role: default
 homeassistant_api: true
 ingress: true
-ingress_port: 5000
+ingress_port: 5001
 ingress_stream: true
 panel_icon: mdi:home-lightning-bolt-outline
-panel_title: EMHASS
+panel_title: EMHASS-EV
 schema:
   hass_url: "str?" #optional
   long_lived_token: "password?" #optional
@@ -36,3 +36,9 @@ schema:
   solcast_rooftop_id: "str?" #optional
   solar_forecast_kwp: "float?" #optional
   server_ip: "list(0.0.0.0|127.0.0.1)?" #optional
+  number_of_ev_loads: "int(0,5)?" #optional - 0 disables EV optimization
+  ev_battery_capacity: "str?" #optional - JSON array like [77000]
+  ev_charging_efficiency: "str?" #optional - JSON array like [0.9]
+  ev_nominal_charging_power: "str?" #optional - JSON array like [4600]
+  ev_minimum_charging_power: "str?" #optional - JSON array like [1380]
+  ev_consumption_efficiency: "str?" #optional - JSON array like [0.15]

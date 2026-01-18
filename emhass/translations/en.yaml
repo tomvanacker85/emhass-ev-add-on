@@ -32,3 +32,21 @@ configuration:
   solar_forecast_kwp:
     name: optional_solar_forecast_kwp,int value for PV peak installed power in KW. (weather_forecast_method=solar.forecast)
     description: optional_solar_forecast_kwp (Default 0). The PV peak installed power in kW used for the 'solar.forecast' API call
+  number_of_ev_loads:
+    name: Number of Electric Vehicles to optimize
+    description: number_of_ev_loads (Default 0). Set to 0 to disable EV optimization. Set to 1 or more to enable EV charging optimization for that many vehicles.
+  ev_battery_capacity:
+    name: EV Battery Capacity (Wh)
+    description: ev_battery_capacity (Default [77000]). JSON array of battery capacities in Wh for each EV. Example for one EV with 77 kWh battery; [77000]
+  ev_charging_efficiency:
+    name: EV Charging Efficiency
+    description: ev_charging_efficiency (Default [0.9]). JSON array of charging efficiencies (0-1) for each EV. Example; [0.9]
+  ev_nominal_charging_power:
+    name: EV Nominal Charging Power (W)
+    description: ev_nominal_charging_power (Default [4600]). JSON array of maximum charging power in W for each EV. Example for 4.6 kW charger; [4600]
+  ev_minimum_charging_power:
+    name: EV Minimum Charging Power (W)
+    description: ev_minimum_charging_power (Default [1380]). JSON array of minimum charging power in W for each EV. Example; [1380]
+  ev_consumption_efficiency:
+    name: EV Consumption Efficiency (kWh/km)
+    description: ev_consumption_efficiency (Default [0.15]). JSON array of energy consumption in kWh/km for each EV. Example; [0.15]

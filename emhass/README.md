@@ -4,6 +4,8 @@
 
 ### A Home Assistant Add-on for the EMHASS module: Energy Management for Home Assistant
 
+**Now with Electric Vehicle (EV) charging optimization! ⚡**
+
 </br>
 
 <div style="display: flex;">
