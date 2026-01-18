@@ -26,6 +26,8 @@ RUN \
     https://github.com/tomvanacker85/emhass-ev.git /tmp/emhass \
   && cd /tmp/emhass \
   && pip3 install --no-cache-dir --break-system-packages -e . \
+  && mkdir -p /app/src/emhass/static/data \
+  && cp -r /tmp/emhass/src/emhass/static/* /app/src/emhass/static/ \
   && rm -rf /tmp/emhass/.git
 
 # Copy run script
