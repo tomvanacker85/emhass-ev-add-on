@@ -24,7 +24,7 @@ panel_title: EMHASS-EV
 schema:
   hass_url: "str?" #optional
   long_lived_token: "password?" #optional
-  data_path: "list(default|/data/|/share)?" #optional
+  data_path: "list(/share/emhass-ev|/data/|/share)?" #optional - default: /share/emhass-ev
   time_zone: "match((\\w+)?(\\/)(\\w+))?" #optional
   Latitude: "float?" #optional
   Longitude: "float?" #optional
