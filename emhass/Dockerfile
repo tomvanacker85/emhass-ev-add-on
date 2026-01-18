@@ -6,11 +6,15 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install requirements for add-on
 RUN \
-  apk add --no-cache \
+  apt-get update \
+  && apt-get install -y --no-install-recommends \
     python3 \
-    py3-pip \
+    python3-pip \
+    python3-dev \
     git \
-  && rm -rf /var/cache/apk/*
+    build-essential \
+    curl \
+  && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
@@ -21,7 +25,7 @@ RUN \
   git clone --branch ${EMHASS_VERSION} --depth 1 \
     https://github.com/tomvanacker85/emhass-ev.git /tmp/emhass \
   && cd /tmp/emhass \
-  && pip3 install --no-cache-dir -e . \
+  && pip3 install --no-cache-dir --break-system-packages -e . \
   && rm -rf /tmp/emhass/.git
 
 # Copy run script
