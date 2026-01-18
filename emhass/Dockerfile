@@ -20,7 +20,7 @@ RUN \
 WORKDIR /app
 
 # Clone and install EMHASS-EV from your repository
-ARG EMHASS_VERSION=main
+ARG EMHASS_VERSION=master
 RUN \
   git clone --branch ${EMHASS_VERSION} --depth 1 \
     https://github.com/tomvanacker85/emhass-ev.git /tmp/emhass \
