@@ -9,6 +9,7 @@ bashio::log.info "Starting EMHASS-EV..."
 export DATA_PATH="/data/"
 export CONFIG_PATH="/share/emhass-ev/config.json"
 export OPTIONS_PATH="/data/options.json"
+export PORT="5001"
 
 # Start EMHASS web server
 cd /app
