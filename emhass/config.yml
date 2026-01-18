@@ -1,7 +1,7 @@
 name: EMHASS-EV
 description: Energy Management for Home Assistant with EV support
 url: https://github.com/tomvanacker85/emhass-ev
-version: dev #set if use image container version
+version: latest #set if use image container version
 slug: emhass-ev
 arch:
   - aarch64
