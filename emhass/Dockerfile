@@ -23,14 +23,11 @@ WORKDIR /app
 ARG EMHASS_VERSION=master
 RUN \
   git clone --branch ${EMHASS_VERSION} --depth 1 \
-    https://github.com/tomvanacker85/emhass-ev.git /tmp/emhass \
-  && cd /tmp/emhass \
-  && pip3 install --no-cache-dir --break-system-packages -e . \
-  && mkdir -p /app/src/emhass/static/data \
-  && cp -r /tmp/emhass/src/emhass/static/* /app/src/emhass/static/ \
-  && rm -rf /tmp/emhass/.git
+    https://github.com/tomvanacker85/emhass-ev.git /app/emhass-source \
+  && cd /app/emhass-source \
+  && pip3 install --no-cache-dir --break-system-packages -e .
 
-# Copy run script (cache buster: v2)
+# Copy run script (cache buster: v3)
 COPY run.sh /
 RUN chmod a+x /run.sh
 
