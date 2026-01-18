@@ -143,13 +143,89 @@ git push origin feature/ev-optimization
 
 #### 3.1 Install Add-on in HAOS
 
-**Method 1: From GitHub (Recommended)**
-1. In HAOS: Settings → Add-ons → Add-on Store
-2. Three dots (⋮) → Repositories
-3. Add your GitHub repository: `https://github.com/<your-username>/emhass-ev-add-on`
-4. Find "EMHASS" in the store
-5. Install the add-on
-6. Start the add-on
+**Important**: Home Assistant's add-on store can only install from the default branch (main/master). To test a feature branch, use Method 1 (Local) or Method 3 (Temporary).
+
+**Method 1: Local Add-on Installation (Recommended for Feature Branch Testing)**
+
+Install directly via SSH to test your feature branch:
+
+1. **Install "Advanced SSH & Web Terminal" add-on** (not the official Terminal & SSH)
+   - Settings → Add-ons → Add-on Store
+   - Search for "Advanced SSH & Web Terminal" by Sabeechen
+   - Install and Start it
+   - **Important**: In the add-on Configuration tab, enable "Protection mode: OFF"
+   - Save and restart the add-on
+
+2. **Open the Terminal** (Web UI or SSH)
+   - Click "OPEN WEB UI" in the add-on
+   - Or SSH to your HAOS IP on port 22222
+
+3. **Become root and clone your feature branch**:
+   ```bash
+   # Switch to root (needed for /addons access)
+   sudo su
+   
+   # Navigate to addons directory
+   cd /addons
+   
+   # Clone your feature branch
+   git clone -b feature/ev-optimization https://github.com/tomvanacker85/emhass-ev-add-on.git emhass-ev-test
+   ```
+   
+   **If git is not available**, install it:
+   ```bash
+   apk add git
+   ```
+
+4. **Refresh add-on store**:
+   - Settings → Add-ons → Add-on Store
+   - Click hamburger menu (☰) → **Check for updates**
+   - Wait 30 seconds and refresh your browser
+
+5. **Find "EMHASS"** under **"Local add-ons"** section
+   - Install the add-on
+   - Start the add-on
+
+**Troubleshooting**:
+- **"Permission denied"**: Make sure you're root (`sudo su`)
+- **"git: not found"**: Run `apk add git` first
+- **"/addons not found"**: Try `/root/addons` or create with `mkdir -p /addons`
+- **Add-on not appearing**: Make sure you're in `/addons` not `/addon` (no 's')
+
+**Method 2: From GitHub Main Branch (After Merging)**
+
+Once you've tested locally and merged to main:
+
+1. **In HAOS**: Settings → Add-ons → Add-on Store
+2. **Click** three dots menu (⋮) → Repositories  
+3. **Add repository**:
+   ```
+   https://github.com/tomvanacker85/emhass-ev-add-on
+   ```
+4. **Wait** for repository to load (30-60 seconds)
+5. **Find** "EMHASS" in available add-ons
+6. **Install** and **Start** the add-on
+
+**Method 3: Temporary Push to Main (Quick Testing)**
+
+If you want to test via the add-on store before merging:
+
+1. **Temporarily merge** feature branch to main:
+   ```bash
+   git checkout main
+   git merge feature/ev-optimization
+   git push origin main
+   ```
+
+2. **Add repository** in HAOS (Method 2 above)
+
+3. **After testing**, reset main:
+   ```bash
+   git reset --hard origin/main~1  # Undo merge
+   git push origin main --force
+   ```
+
+**Recommended Approach**: Use **Method 1 (Local)** for initial testing, then **Method 2** after merging to main.
 
 **Method 2: Local Development (Alternative)**
 1. SSH into HAOS
